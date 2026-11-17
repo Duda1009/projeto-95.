@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -223,13 +222,13 @@ function atualizar(){
   document.getElementById('agua').textContent=(dados.agua/1000).toFixed(2).replace('.',',');
   document.getElementById('barraAgua').style.width=Math.min(100,dados.agua/30)+'%';
   document.getElementById('historico').innerHTML=dados.medidas.slice().reverse().map(m=>
-    `<div class="item"><b>${m.data}</b><br>${m.peso} kg · ${m.cintura} cm<br><span class="small">${m.obs||''}</span></div>`
+    <div class="item"><b>${m.data}</b><br>${m.peso} kg · ${m.cintura} cm<br><span class="small">${m.obs||''}</span></div>
   ).join('')||'<p class="small">Nenhuma medida registrada ainda.</p>';
   document.getElementById('listaRefeicoes').innerHTML=dados.refeicoes.slice().reverse().map(r=>
-    `<div class="item"><b>${r.nome}</b><br>${r.comida}<br><span class="small">${r.data}</span></div>`
+    <div class="item"><b>${r.nome}</b><br>${r.comida}<br><span class="small">${r.data}</span></div>
   ).join('');
   document.getElementById('listaTreinos').innerHTML=dados.treinos.slice().reverse().map(t=>
-    `<div class="item"><b>${t.nome}</b><br>${t.obs}<br><span class="small">${t.data}</span></div>`
+    <div class="item"><b>${t.nome}</b><br>${t.obs}<br><span class="small">${t.data}</span></div>
   ).join('');
 }
 function adicionarAgua(ml){
@@ -274,4 +273,3 @@ atualizar();
 </script>
 </body>
 </html>
-
