@@ -1,1 +1,277 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b09">
+<title>Projeto 95 | Fitness</title>
+<style>
+:root {
+  --bg:#080b09; --panel:#121915; --green:#a3ff3f;
+  --muted:#89958c; --white:#f3f7f3; --line:#253229;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);
+font-family:Arial,sans-serif;padding-bottom:85px}
+header{padding:25px 20px 15px;background:#0c120e;
+border-bottom:1px solid var(--line)}
+.logo{color:var(--green);font-size:13px;font-weight:bold;letter-spacing:3px}
+h1{font-size:29px;margin:8px 0 4px}
+.subtitle{color:var(--muted);font-size:13px}
+main{max-width:700px;margin:auto;padding:18px}
+section{display:none}
+section.active{display:block}
+h2{font-size:20px;margin:10px 0 16px}
+h3{font-size:15px;margin:5px 0 12px}
+.card{background:var(--panel);border:1px solid var(--line);
+border-radius:16px;padding:17px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{font-size:27px;font-weight:bold;color:var(--green);margin-top:9px}
+.small{font-size:12px;color:var(--muted)}
+input,textarea,select{width:100%;background:#080e0a;color:white;
+border:1px solid var(--line);border-radius:9px;padding:12px;
+margin:7px 0 12px;font-size:15px}
+button{background:var(--green);color:#10160c;border:0;border-radius:10px;
+padding:12px 16px;font-weight:bold;cursor:pointer}
+button.secondary{background:#26352a;color:white}
+button.danger{background:#572c2c;color:white}
+label{font-size:12px;color:var(--muted)}
+nav{position:fixed;bottom:0;left:0;right:0;background:#101713;
+border-top:1px solid var(--line);display:flex;justify-content:space-around;
+padding:10px 2px;z-index:5}
+nav button{background:transparent;color:#aab5ac;padding:9px 5px;
+font-size:11px;flex:1}
+nav button.selected{color:var(--green)}
+.progress{height:9px;background:#29332b;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:var(--green);width:0%}
+.item{padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.good{color:var(--green)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{text-align:left;padding:10px 5px;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PROJETO 95</div>
+  <h1>Sua evolução começa aqui.</h1>
+  <div class="subtitle">90 dias de disciplina. Um objetivo: 95 kg.</div>
+</header>
+
+<main>
+<section id="painel" class="active">
+  <h2>Painel de controle</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="small">PESO ATUAL</div>
+      <div class="metric" id="pesoAtual">102,2 kg</div>
+    </div>
+    <div class="card">
+      <div class="small">META</div>
+      <div class="metric">95 kg</div>
+    </div>
+    <div class="card">
+      <div class="small">PESO PERDIDO</div>
+      <div class="metric" id="perdido">0 kg</div>
+    </div>
+    <div class="card">
+      <div class="small">CINTURA</div>
+      <div class="metric" id="cinturaAtual">108 cm</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Progresso até a meta</h3>
+    <div class="progress"><div id="barra"></div></div>
+    <p class="small" id="progressoTexto">Registre suas medidas para acompanhar.</p>
+  </div>
+
+  <div class="card">
+    <h3>Metas diárias</h3>
+    <div class="item">Proteína: <b>170 g</b></div>
+    <div class="item">Carboidratos: <b>300 g</b></div>
+    <div class="item">Gorduras: <b>80 g</b></div>
+    <div class="item">Água: <b>3 litros</b></div>
+    <div class="item">Calorias de referência: <b>2.600 kcal</b></div>
+  </div>
+
+  <div class="card">
+    <h3>Controle de água</h3>
+    <div class="metric"><span id="agua">0</span> / 3 L</div>
+    <div class="progress"><div id="barraAgua"></div></div>
+    <br>
+    <button onclick="adicionarAgua(250)">+ 250 ml</button>
+    <button class="secondary" onclick="adicionarAgua(500)">+ 500 ml</button>
+    <button class="secondary" onclick="zerarAgua()">Reiniciar</button>
+  </div>
+</section>
+
+<section id="alimentacao">
+  <h2>Alimentação</h2>
+  <div class="card">
+    <h3>Planejamento diário</h3>
+    <div class="item"><b>07h — Café da manhã</b><br><span class="small">Ovos, pão integral e fruta.</span></div>
+    <div class="item"><b>12h — Almoço</b><br><span class="small">Frango, arroz, feijão e salada.</span></div>
+    <div class="item"><b>15h30 — Lanche</b><br><span class="small">Iogurte, aveia e fruta.</span></div>
+    <div class="item"><b>18h — Pré-treino</b><br><span class="small">Sanduíche de frango e fruta.</span></div>
+    <div class="item"><b>21h30 — Pós-treino</b><br><span class="small">Frango ou peixe, arroz ou batata e legumes.</span></div>
+  </div>
+  <div class="card">
+    <h3>Registrar refeição</h3>
+    <label>Refeição</label>
+    <input id="refeicao" placeholder="Ex.: Almoço">
+    <label>O que você comeu?</label>
+    <textarea id="comida" rows="3" placeholder="Descreva os alimentos e quantidades"></textarea>
+    <button onclick="registrarRefeicao()">Salvar refeição</button>
+    <div id="listaRefeicoes"></div>
+  </div>
+</section>
+
+<section id="treinos">
+  <h2>Treinamento semanal</h2>
+  <div class="card">
+    <div class="item"><b>SEGUNDA</b><br>Peito, ombros e tríceps + cardio leve.</div>
+    <div class="item"><b>TERÇA</b><br>Costas e bíceps + cardio moderado.</div>
+    <div class="item"><b>QUARTA</b><br>Pernas e panturrilhas.</div>
+    <div class="item"><b>QUINTA</b><br>Peito, costas e abdômen + cardio.</div>
+    <div class="item"><b>SEXTA</b><br>Pernas e ombros + cardio leve.</div>
+    <div class="item"><b>SÁBADO</b><br>Cardio contínuo e mobilidade, opcional.</div>
+    <div class="item"><b>DOMINGO</b><br>Descanso e recuperação.</div>
+  </div>
+  <div class="card">
+    <h3>Registro de treino</h3>
+    <label>Treino realizado</label>
+    <input id="nomeTreino" placeholder="Ex.: Peito e tríceps">
+    <label>Observações</label>
+    <textarea id="obsTreino" rows="3" placeholder="Exercícios, cargas e desempenho"></textarea>
+    <button onclick="registrarTreino()">Salvar treino</button>
+    <div id="listaTreinos"></div>
+  </div>
+</section>
+
+<section id="evolucao">
+  <h2>Minha evolução</h2>
+  <div class="card">
+    <h3>Registrar medidas</h3>
+    <label>Peso (kg)</label>
+    <input id="peso" type="number" step="0.1" placeholder="Ex.: 101.5">
+    <label>Cintura (cm)</label>
+    <input id="cintura" type="number" step="0.5" placeholder="Ex.: 107">
+    <label>Observações</label>
+    <textarea id="observacoes" rows="2" placeholder="Como foi sua semana?"></textarea>
+    <button onclick="registrarMedidas()">Salvar evolução</button>
+  </div>
+  <div class="card">
+    <h3>Histórico de medidas</h3>
+    <div id="historico"></div>
+  </div>
+  <div class="card">
+    <h3>Seus dados</h3>
+    <p class="small">Peso inicial: 102,2 kg</p>
+    <p class="small">Cintura inicial: 108 cm</p>
+    <p class="small">Altura: 1,69 m</p>
+    <p class="small">Meta: 95 kg em 90 dias</p>
+    <button class="secondary" onclick="exportarDados()">Exportar meus dados</button>
+  </div>
+</section>
+</main>
+
+<nav>
+  <button class="selected" onclick="abrir('painel',this)">⌂<br>Painel</button>
+  <button onclick="abrir('alimentacao',this)">◉<br>Alimentação</button>
+  <button onclick="abrir('treinos',this)">◆<br>Treinos</button>
+  <button onclick="abrir('evolucao',this)">↗<br>Evolução</button>
+</nav>
+
+<script>
+const inicial = {
+  pesoInicial:102.2,
+  cinturaInicial:108,
+  medidas:[],
+  refeicoes:[],
+  treinos:[],
+  agua:0,
+  dataAgua:new Date().toLocaleDateString('pt-BR')
+};
+let dados;
+try {
+  dados = JSON.parse(localStorage.getItem('projeto95')) || inicial;
+} catch(e) {
+  dados = inicial;
+}
+function salvar(){
+  localStorage.setItem('projeto95',JSON.stringify(dados));
+}
+function abrir(id,botao){
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('selected'));
+  botao.classList.add('selected');
+}
+function atualizar(){
+  const ultimo=dados.medidas[dados.medidas.length-1];
+  const peso=ultimo?ultimo.peso:dados.pesoInicial;
+  const cintura=ultimo?ultimo.cintura:dados.cinturaInicial;
+  const perdido=dados.pesoInicial-peso;
+  document.getElementById('pesoAtual').textContent=peso.toFixed(1).replace('.',',')+' kg';
+  document.getElementById('cinturaAtual').textContent=cintura+' cm';
+  document.getElementById('perdido').textContent=perdido.toFixed(1).replace('.',',')+' kg';
+  const progresso=Math.max(0,Math.min(100,perdido/(dados.pesoInicial-95)*100));
+  document.getElementById('barra').style.width=progresso+'%';
+  document.getElementById('progressoTexto').textContent=progresso.toFixed(0)+'% do caminho até a meta';
+  document.getElementById('agua').textContent=(dados.agua/1000).toFixed(2).replace('.',',');
+  document.getElementById('barraAgua').style.width=Math.min(100,dados.agua/30)+'%';
+  document.getElementById('historico').innerHTML=dados.medidas.slice().reverse().map(m=>
+    `<div class="item"><b>${m.data}</b><br>${m.peso} kg · ${m.cintura} cm<br><span class="small">${m.obs||''}</span></div>`
+  ).join('')||'<p class="small">Nenhuma medida registrada ainda.</p>';
+  document.getElementById('listaRefeicoes').innerHTML=dados.refeicoes.slice().reverse().map(r=>
+    `<div class="item"><b>${r.nome}</b><br>${r.comida}<br><span class="small">${r.data}</span></div>`
+  ).join('');
+  document.getElementById('listaTreinos').innerHTML=dados.treinos.slice().reverse().map(t=>
+    `<div class="item"><b>${t.nome}</b><br>${t.obs}<br><span class="small">${t.data}</span></div>`
+  ).join('');
+}
+function adicionarAgua(ml){
+  const hoje=new Date().toLocaleDateString('pt-BR');
+  if(dados.dataAgua!==hoje){dados.agua=0;dados.dataAgua=hoje;}
+  dados.agua+=ml;salvar();atualizar();
+}
+function zerarAgua(){dados.agua=0;dados.dataAgua=new Date().toLocaleDateString('pt-BR');salvar();atualizar();}
+function registrarMedidas(){
+  const p=parseFloat(document.getElementById('peso').value);
+  const c=parseFloat(document.getElementById('cintura').value);
+  if(!p||!c||p<30||p>300||c<30||c>250){alert('Informe peso e cintura válidos.');return;}
+  dados.medidas.push({peso:p,cintura:c,obs:document.getElementById('observacoes').value,data:new Date().toLocaleDateString('pt-BR')});
+  salvar();atualizar();alert('Evolução salva!');
+  document.getElementById('peso').value='';
+  document.getElementById('cintura').value='';
+  document.getElementById('observacoes').value='';
+}
+function registrarRefeicao(){
+  const nome=document.getElementById('refeicao').value.trim();
+  const comida=document.getElementById('comida').value.trim();
+  if(!nome||!comida){alert('Preencha a refeição e os alimentos.');return;}
+  dados.refeicoes.push({nome,comida,data:new Date().toLocaleString('pt-BR')});
+  salvar();atualizar();document.getElementById('refeicao').value='';document.getElementById('comida').value='';
+}
+function registrarTreino(){
+  const nome=document.getElementById('nomeTreino').value.trim();
+  const obs=document.getElementById('obsTreino').value.trim();
+  if(!nome){alert('Informe o treino realizado.');return;}
+  dados.treinos.push({nome,obs,data:new Date().toLocaleString('pt-BR')});
+  salvar();atualizar();document.getElementById('nomeTreino').value='';document.getElementById('obsTreino').value='';
+}
+function exportarDados(){
+  const arquivo=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(arquivo);
+  const a=document.createElement('a');a.href=url;a.download='projeto95-backup.json';a.click();
+  URL.revokeObjectURL(url);
+}
+const hoje=new Date().toLocaleDateString('pt-BR');
+if(dados.dataAgua!==hoje){dados.agua=0;dados.dataAgua=hoje;salvar();}
+atualizar();
+</script>
+</body>
+</html>
+
